@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Wizard action must be defined before views that reference it -->
+    <record id="action_shopify_operations_wizard" model="ir.actions.act_window">
+        <field name="name">Shopify Operations</field>
+        <field name="res_model">shopify.operations.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Shopify Dashboard: one tile per store with clear stats and primary action -->
+    <record id="view_shopify_store_kanban_dashboard" model="ir.ui.view">
+        <field name="name">shopify.store.kanban.dashboard</field>
+        <field name="model">shopify.store</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_shopify_dashboard">
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card o_kanban_record">
+                            <div class="oe_kanban_content">
+                                <!-- Header: store info and period -->
+                                <div class="d-flex justify-content-between align-items-start mb8">
+                                    <div class="o_kanban_primary o_kanban_primary_left">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted o_text_overflow">
+                                            <field name="shop_url"/>
+                                        </div>
+                                    </div>
+                                    <div class="text-muted small mt4">
+                                        Current Week
+                                    </div>
+                                </div>
+
+                                <!-- Chart placeholder -->
+                                <div class="o_kanban_secondary">
+                                    <div style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px; min-height: 120px;">
+                                        <div class="d-flex justify-content-between mb4">
+                                            <div>
+                                                <span class="small text-muted">Sales</span>
+                                                <div class="h5 mb0">€0</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="small text-muted">Average Order Value</div>
+                                                <div class="small text-danger">
+                                                    <i class="fa fa-arrow-down"/> 0%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-muted small" style="margin-top: 12px;">
+                                            MON · TUE · WED · THU · FRI · SAT · SUN
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Stat tiles -->
+                                <div class="mt8">
+                                    <!-- first row -->
+                                    <div class="row mb4">
+                                        <div class="col-4 text-center">
+                                            <div class="o_stat_box">
+                                                <div class="small text-muted">Imported 24h</div>
+                                                <div class="h6 mb0">
+                                                    <field name="orders_imported_count"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div class="o_stat_box">
+                                                <div class="small text-muted">Failed 24h</div>
+                                                <div class="h6 mb0 text-danger">
+                                                    <field name="orders_failed_count"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div class="o_stat_box">
+                                                <div class="small text-muted">Last Import</div>
+                                                <div class="small">
+                                                    <field name="last_order_import_time"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- second row -->
+                                    <div class="row">
+                                        <div class="col-4 text-center">
+                                            <div class="o_stat_box">
+                                                <div class="small text-muted">Products</div>
+                                                <div class="h6 mb0">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div class="o_stat_box">
+                                                <div class="small text-muted">Customers</div>
+                                                <div class="h6 mb0">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div class="o_stat_box">
+                                                <div class="small text-muted">Orders</div>
+                                                <div class="h6 mb0">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer: main action -->
+                                <div class="o_kanban_footer mt8 d-flex justify-content-start">
+                                    <button type="action"
+                                            name="%(action_shopify_operations_wizard)d"
+                                            string="Perform Operation"
+                                            class="btn btn-primary"
+                                            context="{'default_store_id': id}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_shopify_dashboard" model="ir.actions.act_window">
+        <field name="name">Shopify Dashboard</field>
+        <field name="res_model">shopify.store</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <!-- Wizard to perform operations such as Import Products -->
+    <record id="view_shopify_operations_wizard_form" model="ir.ui.view">
+        <field name="name">shopify.operations.wizard.form</field>
+        <field name="model">shopify.operations.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Operations">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <span class="text-muted">Run a bulk operation on your Shopify store.</span>
+                        </h1>
+                    </div>
+
+                    <group string="1. Choose Store and Operation" class="mt16">
+                        <group>
+                            <field name="store_id" required="1" class="o_required_modifier"/>
+                            <field name="operation" required="1" class="o_required_modifier"/>
+                        </group>
+                        <group>
+                            <p class="text-muted">
+                                Select the Shopify store and what you want to do
+                                (import products, upload from Excel, sync customers, etc.).
+                            </p>
+                        </group>
+                    </group>
+
+                    <group string="2. Operation Parameters" class="mt16">
+                        <group>
+                            <field name="shopify_product_id"
+                                   invisible="operation != 'spacific_products'"/>
+                            <field name="shopify_customer_id"
+                                   invisible="operation != 'spacific_customer'"/>
+                            <field name="file_data"
+                                   filename="file_filename"
+                                   invisible="operation != 'upload_products'"/>
+                            <field name="file_filename" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <group string="3. Upload from Excel" invisible="operation != 'upload_products'">
+                        <group colspan="2">
+                            <p class="text-muted">
+                                Upload a .xlsx file with columns:
+                                <span class="badge badge-secondary">Name</span>,
+                                <span class="badge badge-secondary">Description</span>,
+                                <span class="badge badge-secondary">SKU</span>,
+                                <span class="badge badge-secondary">List Price</span>,
+                                <span class="badge badge-secondary">Cost</span>,
+                                <span class="badge badge-secondary">Category</span>,
+                                <span class="badge badge-secondary">Barcode</span>
+                                (first row must contain the headers).
+                            </p>
+                        </group>
+                    </group>
+
+                    <group string="3. Import Filters" invisible="operation != 'import_products'">
+                        <group>
+                            <field name="import_based_on"/>
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                        </group>
+                        <group>
+                            <p class="text-muted">
+                                Use these filters to limit which products are imported
+                                (for example by creation date or last update date).
+                            </p>
+                        </group>
+                    </group>
+
+                    <group string="3. Import Shipped Orders" invisible="operation != 'import_shipped_orders'">
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <p class="text-muted">
+                                Only orders shipped between these dates will be fetched from Shopify.
+                            </p>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button string="Run Operation"
+                                name="action_execute"
+                                type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
+

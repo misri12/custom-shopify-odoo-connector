@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Odoo Shopify Connector - Documentation</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header class="doc-header">
+        <div class="doc-header-inner">
+            <div class="logo-block">
+                <img src="logo.png" alt="Odoo Shopify Connector Logo" class="module-logo" onerror="this.classList.add('logo-fallback')" />
+                <div class="logo-text">
+                    <h1>Odoo Shopify Connector</h1>
+                    <p>Seamless integration between Odoo ERP and Shopify Store</p>
+                </div>
+            </div>
+            <nav class="doc-nav">
+                <a href="#overview">Overview</a>
+                <a href="#features">Features</a>
+                <a href="#workflows">Workflows</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#dashboard">Dashboard</a>
+                <a href="#charts">Charts</a>
+                <a href="#setup">Setup</a>
+                <a href="#technical">Technical</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO / OVERVIEW -->
+        <section id="overview" class="section hero">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <p class="pill pill-outline">Odoo 19.0 &nbsp;•&nbsp; Shopify REST API &amp; Webhooks</p>
+                    <h2>Synchronize Shopify and Odoo in Real Time</h2>
+                    <p>
+                        The Odoo Shopify Connector provides a robust bridge between your Shopify store and Odoo ERP.
+                        It keeps <strong>products</strong>, <strong>orders</strong>, <strong>customers</strong>,
+                        <strong>inventory</strong>, <strong>fulfillment</strong> and <strong>refunds</strong>
+                        perfectly synchronized so your back-office is always up to date.
+                    </p>
+                    <ul class="hero-points">
+                        <li>Bi-directional sync for key business objects</li>
+                        <li>Queue-based processing for reliability</li>
+                        <li>Webhook-driven real-time order import</li>
+                    </ul>
+                    <div class="hero-cta-row">
+                        <button class="primary-cta" data-scroll-to="#setup">View setup steps</button>
+                        <button class="ghost-cta" data-scroll-to="#workflows">See workflows</button>
+                    </div>
+                </div>
+                <div class="hero-diagram card floating-card">
+                    <h3>Shopify ⇄ Odoo Synchronization</h3>
+                    <div class="sync-diagram">
+                        <div class="sync-node shopify">
+                            <span class="sync-title">Shopify</span>
+                            <span class="sync-sub">Storefront</span>
+                        </div>
+                        <div class="sync-arrows">
+                            <span class="arrow arrow-left">Products • Orders • Customers</span>
+                            <span class="arrow arrow-right">Inventory • Fulfillment • Refunds</span>
+                        </div>
+                        <div class="sync-node odoo">
+                            <span class="sync-title">Odoo</span>
+                            <span class="sync-sub">ERP Backend</span>
+                        </div>
+                    </div>
+                    <p class="diagram-caption">
+                        A dedicated connector layer ensures secure, reliable communication between Shopify and Odoo.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD / METRICS -->
+        <section id="dashboard" class="section">
+            <div class="section-header">
+                <h2>Live Commerce Snapshot</h2>
+                <p>A visual overview of how your connector performs once in production.</p>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-card glass">
+                    <p class="metric-label">Products synced</p>
+                    <p class="metric-value" data-counter data-target="12480">0</p>
+                    <p class="metric-sub">Across all connected Shopify stores</p>
+                </div>
+                <div class="metric-card glass">
+                    <p class="metric-label">Orders imported</p>
+                    <p class="metric-value" data-counter data-target="3275">0</p>
+                    <p class="metric-sub">Created as Odoo Sale Orders</p>
+                </div>
+                <div class="metric-card glass">
+                    <p class="metric-label">Customers linked</p>
+                    <p class="metric-value" data-counter data-target="1890">0</p>
+                    <p class="metric-sub">Mapped to Odoo partners</p>
+                </div>
+                <div class="metric-card glass">
+                    <p class="metric-label">Stock updates / hour</p>
+                    <p class="metric-value" data-counter data-target="560">0</p>
+                    <p class="metric-sub">Inventory pushes to Shopify</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURE ICON GRID -->
+        <section id="features" class="section section-alt">
+            <div class="section-header">
+                <h2>Core Synchronization Features</h2>
+                <p>Each functional area is handled by a dedicated synchronization engine with queues and mappers.</p>
+            </div>
+            <div class="feature-grid">
+                <!-- Product Sync -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-product"></div>
+                        <div>
+                            <h3>Product Synchronization</h3>
+                            <p>Keep your Shopify catalog aligned with Odoo products and variants.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle product sync details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Export Odoo products to Shopify with one click or via schedulers.</li>
+                            <li>Full variant support including attributes, options and combinations.</li>
+                            <li>Image synchronization from Odoo product images to Shopify media.</li>
+                            <li>Price updates driven by Odoo pricelists and currency rules.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node">Odoo Product</div>
+                            <div class="mini-arrow">Export Job</div>
+                            <div class="mini-node mini-node-accent">Shopify Product</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Order Sync -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-order"></div>
+                        <div>
+                            <h3>Order Synchronization</h3>
+                            <p>Import Shopify orders into Odoo with correct status and financial data.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle order sync details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Automatic Shopify order import using webhooks or scheduled jobs.</li>
+                            <li>Order status updates sent back to Shopify when processed in Odoo.</li>
+                            <li>Refund synchronization ensuring financial documents stay aligned.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node mini-node-accent">Shopify Order</div>
+                            <div class="mini-arrow">Queue / Mapper</div>
+                            <div class="mini-node">Odoo Sale Order</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Customer Sync -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-customer"></div>
+                        <div>
+                            <h3>Customer Synchronization</h3>
+                            <p>Centralize customer data in Odoo while keeping Shopify in sync.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle customer sync details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Import Shopify customers and link them to Odoo partners.</li>
+                            <li>Accurate invoice and delivery address mapping.</li>
+                            <li>Automatic linking of customers across multiple Shopify stores.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node mini-node-accent">Shopify Customer</div>
+                            <div class="mini-arrow">Mapper</div>
+                            <div class="mini-node">Odoo Partner</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Inventory Sync -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-inventory"></div>
+                        <div>
+                            <h3>Inventory Synchronization</h3>
+                            <p>Publish up-to-date stock levels from Odoo to Shopify.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle inventory sync details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Export available stock quantities to corresponding Shopify locations.</li>
+                            <li>Multi-warehouse support with configurable mapping rules.</li>
+                            <li>Inventory updates driven by Odoo stock moves and pickings.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node">Odoo Stock</div>
+                            <div class="mini-arrow">Inventory Export</div>
+                            <div class="mini-node mini-node-accent">Shopify Inventory</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Fulfillment -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-fulfillment"></div>
+                        <div>
+                            <h3>Fulfillment & Shipping</h3>
+                            <p>Send tracking information and fulfillment status from Odoo.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle fulfillment details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Push tracking numbers to Shopify when deliveries are validated in Odoo.</li>
+                            <li>Update shipping and fulfillment status automatically.</li>
+                            <li>Optionally restrict which operations create Shopify fulfillments.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node">Odoo Delivery</div>
+                            <div class="mini-arrow">Fulfillment API</div>
+                            <div class="mini-node mini-node-accent">Shopify Fulfillment</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Order Sync -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-order"></div>
+                        <div>
+                            <h3>Order Synchronization</h3>
+                            <p>Import Shopify orders into Odoo with correct status and financial data.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle order sync details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Automatic Shopify order import using webhooks or scheduled jobs.</li>
+                            <li>Order status updates sent back to Shopify when processed in Odoo.</li>
+                            <li>Refund synchronization ensuring financial documents stay aligned.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node mini-node-accent">Shopify Order</div>
+                            <div class="mini-arrow">Queue / Mapper</div>
+                            <div class="mini-node">Odoo Sale Order</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Customer Sync -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-customer"></div>
+                        <div>
+                            <h3>Customer Synchronization</h3>
+                            <p>Centralize customer data in Odoo while keeping Shopify in sync.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle customer sync details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Import Shopify customers and link them to Odoo partners.</li>
+                            <li>Accurate invoice and delivery address mapping.</li>
+                            <li>Automatic linking of customers across multiple Shopify stores.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node mini-node-accent">Shopify Customer</div>
+                            <div class="mini-arrow">Mapper</div>
+                            <div class="mini-node">Odoo Partner</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Inventory Sync -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-inventory"></div>
+                        <div>
+                            <h3>Inventory Synchronization</h3>
+                            <p>Publish up-to-date stock levels from Odoo to Shopify.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle inventory sync details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Export available stock quantities to corresponding Shopify locations.</li>
+                            <li>Multi-warehouse support with configurable mapping rules.</li>
+                            <li>Inventory updates driven by Odoo stock moves and pickings.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node">Odoo Stock</div>
+                            <div class="mini-arrow">Inventory Export</div>
+                            <div class="mini-node mini-node-accent">Shopify Inventory</div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Fulfillment -->
+                <article class="feature-card collapsible" data-collapsible>
+                    <div class="feature-card-header">
+                        <div class="feature-icon icon-fulfillment"></div>
+                        <div>
+                            <h3>Fulfillment &amp; Shipping</h3>
+                            <p>Send tracking information and fulfillment status from Odoo.</p>
+                        </div>
+                        <button class="feature-toggle" aria-label="Toggle fulfillment details"></button>
+                    </div>
+                    <div class="feature-card-body">
+                        <ul>
+                            <li>Push tracking numbers to Shopify when deliveries are validated in Odoo.</li>
+                            <li>Update shipping and fulfillment status automatically.</li>
+                            <li>Optionally restrict which operations create Shopify fulfillments.</li>
+                        </ul>
+                        <div class="mini-diagram">
+                            <div class="mini-node">Odoo Delivery</div>
+                            <div class="mini-arrow">Fulfillment API</div>
+                            <div class="mini-node mini-node-accent">Shopify Fulfillment</div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- compact icon grid for quick scan -->
+            <div class="feature-icon-grid">
+                <div class="feature-icon-item">
+                    <span class="feature-icon-dot feature-icon-dot-green"></span>
+                    <span>Product Sync</span>
+                </div>
+                <div class="feature-icon-item">
+                    <span class="feature-icon-dot feature-icon-dot-blue"></span>
+                    <span>Order Sync</span>
+                </div>
+                <div class="feature-icon-item">
+                    <span class="feature-icon-dot feature-icon-dot-orange"></span>
+                    <span>Customer Sync</span>
+                </div>
+                <div class="feature-icon-item">
+                    <span class="feature-icon-dot feature-icon-dot-purple"></span>
+                    <span>Inventory Sync</span>
+                </div>
+                <div class="feature-icon-item">
+                    <span class="feature-icon-dot feature-icon-dot-yellow"></span>
+                    <span>Refund Sync</span>
+                </div>
+                <div class="feature-icon-item">
+                    <span class="feature-icon-dot feature-icon-dot-teal"></span>
+                    <span>Shipping Sync</span>
+                </div>
+                <div class="feature-icon-item">
+                    <span class="feature-icon-dot feature-icon-dot-pink"></span>
+                    <span>Multi-Store Support</span>
+                </div>
+                <div class="feature-icon-item">
+                    <span class="feature-icon-dot feature-icon-dot-slate"></span>
+                    <span>Queue System</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORKFLOW SECTION -->
+        <section id="workflows" class="section">
+            <div class="section-header">
+                <h2>End-to-End Workflows</h2>
+                <p>Visual flows that show how data travels between Shopify and Odoo.</p>
+            </div>
+
+            <div class="workflow-grid">
+                <div class="workflow-card card">
+                    <h3>Product Export Flow</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="step-label">Odoo Product</span>
+                            <span class="step-desc">Configured with variants, prices and stock.</span>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step">
+                            <span class="step-label">Shopify API</span>
+                            <span class="step-desc">Connector transforms and sends product payload.</span>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step">
+                            <span class="step-label">Shopify Store</span>
+                            <span class="step-desc">Product published and visible to customers.</span>
+                        </div>
+                    </div>
+                    <img src="images/product_sync.svg" alt="Product synchronization diagram" class="flow-image" />
+                </div>
+
+                <div class="workflow-card card">
+                    <h3>Order Import Flow</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="step-label">Shopify Order</span>
+                            <span class="step-desc">Created by a customer checkout.</span>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step">
+                            <span class="step-label">Webhook</span>
+                            <span class="step-desc">Shopify notifies Odoo connector in real-time.</span>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step">
+                            <span class="step-label">Odoo Sale Order</span>
+                            <span class="step-desc">Order, customer and lines are created in Odoo.</span>
+                        </div>
+                    </div>
+                    <img src="images/order_sync.svg" alt="Order synchronization diagram" class="flow-image" />
+                </div>
+
+                <div class="workflow-card card">
+                    <h3>Stock Synchronization</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="step-label">Odoo Warehouse</span>
+                            <span class="step-desc">Real stock calculated from moves &amp; pickings.</span>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step">
+                            <span class="step-label">Stock Export Engine</span>
+                            <span class="step-desc">Aggregation by warehouse / location mapping.</span>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step">
+                            <span class="step-label">Shopify Inventory</span>
+                            <span class="step-desc">Available quantities per Shopify location.</span>
+                        </div>
+                    </div>
+                    <img src="images/inventory_sync.svg" alt="Inventory synchronization diagram" class="flow-image" />
+                </div>
+
+                <div class="workflow-card card">
+                    <h3>Refund Synchronization</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <span class="step-label">Odoo Credit Note</span>
+                            <span class="step-desc">Created from refund wizard on invoice.</span>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step">
+                            <span class="step-label">Refund API</span>
+                            <span class="step-desc">Connector posts refund to Shopify.</span>
+                        </div>
+                        <div class="flow-arrow"></div>
+                        <div class="flow-step">
+                            <span class="step-label">Shopify Refund</span>
+                            <span class="step-desc">Customer sees refund in store &amp; emails.</span>
+                        </div>
+                    </div>
+                    <img src="images/refund_sync.svg" alt="Refund synchronization diagram" class="flow-image" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURE SECTION -->
+        <section id="architecture" class="section section-alt">
+            <div class="section-header">
+                <h2>Module Architecture</h2>
+                <p>A layered architecture that separates business logic, transport and data mapping.</p>
+            </div>
+            <div class="architecture-layout">
+                <div class="architecture-diagram card">
+                    <svg viewBox="0 0 600 320" class="architecture-svg" aria-label="Module architecture diagram">
+                        <!-- Layers -->
+                        <rect x="40" y="30" width="520" height="60" class="arch-layer arch-layer-top"></rect>
+                        <rect x="40" y="120" width="520" height="60" class="arch-layer"></rect>
+                        <rect x="40" y="210" width="520" height="60" class="arch-layer arch-layer-bottom"></rect>
+
+                        <text x="300" y="65" class="arch-text">Models &amp; Services</text>
+                        <text x="300" y="155" class="arch-text">Queues &amp; Schedulers</text>
+                        <text x="300" y="245" class="arch-text">Webhooks &amp; Mappers</text>
+
+                        <!-- Connectors -->
+                        <line x1="300" y1="90" x2="300" y2="120" class="arch-connector" />
+                        <line x1="300" y1="180" x2="300" y2="210" class="arch-connector" />
+                    </svg>
+                </div>
+                <div class="architecture-details">
+                    <ul class="arch-list">
+                        <li><strong>Models</strong> — Represent Shopify stores, queues, products, orders and related entities inside Odoo.</li>
+                        <li><strong>Queues</strong> — Store pending synchronization jobs for products, prices, orders and inventory.</li>
+                        <li><strong>Schedulers</strong> — Odoo cron jobs that process queues and keep systems aligned.</li>
+                        <li><strong>Webhooks</strong> — Receive real-time events from Shopify (orders, refunds, customer changes).</li>
+                        <li><strong>Services</strong> — Encapsulate API communication, pagination handling and error management.</li>
+                        <li><strong>Mappers</strong> — Convert Shopify payloads into Odoo-compatible data structures and vice versa.</li>
+                    </ul>
+                    <img src="images/workflow.svg" alt="High-level workflow illustration" class="architecture-image" />
+                </div>
+            </div>
+        </section>
+
+        <!-- CHARTS / QUEUE & PERFORMANCE -->
+        <section id="charts" class="section">
+            <div class="section-header">
+                <h2>Observability &amp; Throughput</h2>
+                <p>Visualize how queues, webhooks and synchronization jobs behave over time.</p>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card glass">
+                    <h3>Queue Processing Flow</h3>
+                    <canvas id="queueChart" width="380" height="200"></canvas>
+                    <p class="chart-caption">
+                        Number of jobs processed per interval for products, orders and inventory.
+                    </p>
+                </div>
+                <div class="chart-card glass">
+                    <h3>Webhook Processing</h3>
+                    <canvas id="webhookChart" width="380" height="200"></canvas>
+                    <p class="chart-caption">
+                        Average response times and error rates for incoming Shopify webhooks.
+                    </p>
+                </div>
+                <div class="chart-card glass">
+                    <h3>Synchronization Latency</h3>
+                    <canvas id="latencyChart" width="380" height="200"></canvas>
+                    <p class="chart-caption">
+                        Time between Shopify events and corresponding updates in Odoo.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETUP GUIDE -->
+        <section id="setup" class="section">
+            <div class="section-header">
+                <h2>Setup Guide</h2>
+                <p>Follow this timeline to configure the connector from installation to production sync.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-line"></div>
+                <div class="timeline-step" data-step="1">
+                    <div class="timeline-content card">
+                        <h3>Install Module</h3>
+                        <p>Install the Shopify Connector module from your Odoo Apps dashboard and update your apps list if needed.</p>
+                    </div>
+                </div>
+                <div class="timeline-step" data-step="2">
+                    <div class="timeline-content card">
+                        <h3>Configure Shopify Store</h3>
+                        <p>Create or select your Shopify store record in Odoo and enter basic store information and URL.</p>
+                    </div>
+                </div>
+                <div class="timeline-step" data-step="3">
+                    <div class="timeline-content card">
+                        <h3>Setup API Credentials</h3>
+                        <p>Generate Shopify API credentials (Admin API / access token) and configure them on the Odoo Shopify store.</p>
+                    </div>
+                </div>
+                <div class="timeline-step" data-step="4">
+                    <div class="timeline-content card">
+                        <h3>Map Warehouses &amp; Locations</h3>
+                        <p>Map Shopify locations to Odoo warehouses so inventory exports target the correct stock locations.</p>
+                    </div>
+                </div>
+                <div class="timeline-step" data-step="5">
+                    <div class="timeline-content card">
+                        <h3>Sync Products</h3>
+                        <p>Run initial product export from Odoo to Shopify, or import existing Shopify products to Odoo if supported.</p>
+                    </div>
+                </div>
+                <div class="timeline-step" data-step="6">
+                    <div class="timeline-content card">
+                        <h3>Import Orders</h3>
+                        <p>Enable order webhooks or schedulers so new Shopify orders are imported automatically into Odoo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ANIMATED PROCESS STEPS -->
+        <section class="section">
+            <div class="section-header">
+                <h2>Animated Processes</h2>
+                <p>Key processes broken down into clear, animated steps.</p>
+            </div>
+            <div class="process-grid">
+                <div class="process-card glass">
+                    <h3>Import Orders</h3>
+                    <ol class="process-steps" data-process>
+                        <li><span>Step 1</span><p>Shopify creates an order at checkout.</p></li>
+                        <li><span>Step 2</span><p>Webhook hits the Odoo connector endpoint.</p></li>
+                        <li><span>Step 3</span><p>Order payload is stored in the queue.</p></li>
+                        <li><span>Step 4</span><p>Background job creates &amp; confirms the Odoo Sale Order.</p></li>
+                    </ol>
+                </div>
+                <div class="process-card glass">
+                    <h3>Export Products</h3>
+                    <ol class="process-steps" data-process>
+                        <li><span>Step 1</span><p>Products are prepared in Odoo with variants &amp; prices.</p></li>
+                        <li><span>Step 2</span><p>Export jobs are enqueued via manual action or cron.</p></li>
+                        <li><span>Step 3</span><p>Connector maps data to Shopify API payload.</p></li>
+                        <li><span>Step 4</span><p>Shopify products &amp; variants are created or updated.</p></li>
+                    </ol>
+                </div>
+                <div class="process-card glass">
+                    <h3>Stock Synchronization</h3>
+                    <ol class="process-steps" data-process>
+                        <li><span>Step 1</span><p>Stock levels change in Odoo (moves, pickings, returns).</p></li>
+                        <li><span>Step 2</span><p>Inventory export queue aggregates on-hand quantities.</p></li>
+                        <li><span>Step 3</span><p>Connector pushes stock per mapped location.</p></li>
+                        <li><span>Step 4</span><p>Shopify inventory is updated and overselling is reduced.</p></li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- TECHNICAL FEATURES -->
+        <section id="technical" class="section section-alt">
+            <div class="section-header">
+                <h2>Technical Capabilities</h2>
+                <p>Designed for reliability, observability and high-volume commerce operations.</p>
+            </div>
+            <div class="technical-grid">
+                <div class="technical-card card">
+                    <h3>Queue System</h3>
+                    <p>All synchronization operations are added to dedicated queues, making processing resilient and traceable.</p>
+                    <ul>
+                        <li>Separate queues per entity type.</li>
+                        <li>Detailed job status and error messages.</li>
+                        <li>Manual retry and cancellation options.</li>
+                    </ul>
+                </div>
+                <div class="technical-card card">
+                    <h3>Cron Jobs &amp; Scheduling</h3>
+                    <p>Configurable cron jobs control how often products, inventory and other data are synchronized.</p>
+                    <ul>
+                        <li>Time-based schedulers for regular exports/imports.</li>
+                        <li>Automatic cleanup and archiving of old queue records.</li>
+                    </ul>
+                </div>
+                <div class="technical-card card">
+                    <h3>Webhook Processing</h3>
+                    <p>Real-time hooks for orders and other events reduce latency between Shopify and Odoo.</p>
+                    <ul>
+                        <li>Secure verification of webhook signatures.</li>
+                        <li>Event-to-queue conversion for safe background handling.</li>
+                    </ul>
+                </div>
+                <div class="technical-card card">
+                    <h3>Multi-Store Support</h3>
+                    <p>Operate multiple Shopify stores against a single Odoo database.</p>
+                    <ul>
+                        <li>Independent configuration and credentials per store.</li>
+                        <li>Per-store order routing and stock rules.</li>
+                    </ul>
+                </div>
+                <div class="technical-card card">
+                    <h3>Retry &amp; Error Handling</h3>
+                    <p>Failed jobs remain in the queue with full context so they can be retried after configuration fixes.</p>
+                    <ul>
+                        <li>Configurable retry behavior for transient errors.</li>
+                        <li>Detailed logging for API and mapping errors.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT / QR CODES -->
+        <section id="contact" class="section contact-section">
+            <div class="section-header">
+                <h2>Connect with us</h2>
+                <p>Scan a QR code to reach us quickly on WhatsApp or email.</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="qr-card qr-whatsapp">
+                    <div class="qr-card-header">
+                        <div class="qr-card-title">Connect Via WhatsApp</div>
+                        <div class="qr-card-icon">W</div>
+                    </div>
+                    <div class="qr-card-body">
+                        <div class="qr-box">
+                            <img src="images/qr_whatsapp.png" alt="WhatsApp QR code" />
+                            <div class="scan-me">Scan Me</div>
+                            <div class="contact-value">+92 315 1945928</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qr-card qr-email">
+                    <div class="qr-card-header">
+                        <div class="qr-card-title">Connect Via Email</div>
+                        <div class="qr-card-icon">@</div>
+                    </div>
+                    <div class="qr-card-body">
+                        <div class="qr-box">
+                            <img src="images/qr_email.png" alt="Email QR code" />
+                            <div class="scan-me">Scan Me</div>
+                            <div class="contact-value">misrikhan394@gmail.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="doc-footer">
+        <p>
+            Odoo Shopify Connector &mdash; Documentation page is fully offline and ships with the module.<br />
+            Developed by <strong>Gultaj Khan</strong> (<code>@misri12</code>) &mdash;
+            Contact: <code>gultajkhan980@gmail.com</code> · <code>misrikhan394@gmail.com</code> · <code>+92 315 1945928</code>.
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
