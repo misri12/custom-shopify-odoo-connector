@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Wizard view: update existing Shopify products -->
+    <record id="view_shopify_update_product_wizard_form" model="ir.ui.view">
+        <field name="name">shopify.update.product.wizard.form</field>
+        <field name="model">shopify.update.product.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Existing Product">
+                <sheet>
+                    <group>
+                        <field name="store_id" required="1" options="{'no_create': True}"/>
+                        <field name="product_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <group string="What do you want to update?">
+                        <group>
+                            <field name="update_price"/>
+                            <field name="update_inventory"/>
+                        </group>
+                        <group>
+                            <field name="update_description"/>
+                            <field name="update_image"/>
+                        </group>
+                    </group>
+                    <p class="text-muted">
+                        Price updates use the Shopify Pricelist configured on the selected Shopify store.
+                        Multiple products and variants can be processed in the background via a price update queue.
+                    </p>
+                </sheet>
+                <footer>
+                    <button name="action_update_products"
+                            string="Update Product"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action: open Shopify Update Product wizard from Shopify Products (layer) or products -->
+    <record id="action_shopify_update_product_wizard" model="ir.actions.act_window">
+        <field name="name">Update Existing Product</field>
+        <field name="res_model">shopify.update.product.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <!-- Available from Shopify Products list (shopify.product.layer) -->
+        <field name="binding_model_id" ref="custom_odoo_shopify_connector.model_shopify_product_layer"/>
+    </record>
+
+</odoo>
+

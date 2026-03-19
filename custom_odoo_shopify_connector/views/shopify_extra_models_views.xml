@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Shopify Product Tag -->
+    <record id="view_shopify_product_tag_tree" model="ir.ui.view">
+        <field name="name">shopify.product.tag.tree</field>
+        <field name="model">shopify.product.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Product Tags">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_product_tag_form" model="ir.ui.view">
+        <field name="name">shopify.product.tag.form</field>
+        <field name="model">shopify.product.tag</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Product Tag">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_product_tag_search" model="ir.ui.view">
+        <field name="name">shopify.product.tag.search</field>
+        <field name="model">shopify.product.tag</field>
+        <field name="arch" type="xml">
+            <search string="Shopify Product Tags">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <filter name="state_pending" string="Pending" domain="[('state','=','pending')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_product_tag" model="ir.actions.act_window">
+        <field name="name">Product Tags</field>
+        <field name="res_model">shopify.product.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Shopify Product Collection -->
+    <record id="view_shopify_product_collection_tree" model="ir.ui.view">
+        <field name="name">shopify.product.collection.tree</field>
+        <field name="model">shopify.product.collection</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Product Collections">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_product_collection_form" model="ir.ui.view">
+        <field name="name">shopify.product.collection.form</field>
+        <field name="model">shopify.product.collection</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Product Collection">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_product_collection_search" model="ir.ui.view">
+        <field name="name">shopify.product.collection.search</field>
+        <field name="model">shopify.product.collection</field>
+        <field name="arch" type="xml">
+            <search string="Shopify Product Collections">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_product_collection" model="ir.actions.act_window">
+        <field name="name">Product Collections</field>
+        <field name="res_model">shopify.product.collection</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Shopify Customer Mapping -->
+    <record id="view_shopify_customer_mapping_tree" model="ir.ui.view">
+        <field name="name">shopify.customer.mapping.tree</field>
+        <field name="model">shopify.customer.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Customer Mappings">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_customer_mapping_form" model="ir.ui.view">
+        <field name="name">shopify.customer.mapping.form</field>
+        <field name="model">shopify.customer.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Customer Mapping">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_customer_mapping_search" model="ir.ui.view">
+        <field name="name">shopify.customer.mapping.search</field>
+        <field name="model">shopify.customer.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Shopify Customer Mappings">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_customer_mapping" model="ir.actions.act_window">
+        <field name="name">Customer Mapping</field>
+        <field name="res_model">shopify.customer.mapping</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Shopify Inventory Adjustment Log -->
+    <record id="view_shopify_inventory_adjustment_log_tree" model="ir.ui.view">
+        <field name="name">shopify.inventory.adjustment.log.tree</field>
+        <field name="model">shopify.inventory.adjustment.log</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Inventory Adjustment Logs">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_inventory_adjustment_log_form" model="ir.ui.view">
+        <field name="name">shopify.inventory.adjustment.log.form</field>
+        <field name="model">shopify.inventory.adjustment.log</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Inventory Adjustment Log">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_inventory_adjustment_log_search" model="ir.ui.view">
+        <field name="name">shopify.inventory.adjustment.log.search</field>
+        <field name="model">shopify.inventory.adjustment.log</field>
+        <field name="arch" type="xml">
+            <search string="Shopify Inventory Adjustment Logs">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_inventory_adjustment_log" model="ir.actions.act_window">
+        <field name="name">Inventory Adjustment Logs</field>
+        <field name="res_model">shopify.inventory.adjustment.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Shopify Carrier Mapping -->
+    <record id="view_shopify_carrier_mapping_tree" model="ir.ui.view">
+        <field name="name">shopify.carrier.mapping.tree</field>
+        <field name="model">shopify.carrier.mapping</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Carrier Mapping">
+                <field name="name"/>
+                <field name="carrier_id"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_carrier_mapping_form" model="ir.ui.view">
+        <field name="name">shopify.carrier.mapping.form</field>
+        <field name="model">shopify.carrier.mapping</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Carrier Mapping">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="carrier_id"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_carrier_mapping_search" model="ir.ui.view">
+        <field name="name">shopify.carrier.mapping.search</field>
+        <field name="model">shopify.carrier.mapping</field>
+        <field name="arch" type="xml">
+            <search string="Shopify Carrier Mapping">
+                <field name="name"/>
+                <field name="carrier_id"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_carrier_mapping" model="ir.actions.act_window">
+        <field name="name">Carrier Mapping</field>
+        <field name="res_model">shopify.carrier.mapping</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Shopify Customer Queue -->
+    <record id="view_shopify_customer_queue_tree" model="ir.ui.view">
+        <field name="name">shopify.customer.queue.tree</field>
+        <field name="model">shopify.customer.queue</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Customer Queue">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_customer_queue_form" model="ir.ui.view">
+        <field name="name">shopify.customer.queue.form</field>
+        <field name="model">shopify.customer.queue</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Customer Queue">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_customer_queue_search" model="ir.ui.view">
+        <field name="name">shopify.customer.queue.search</field>
+        <field name="model">shopify.customer.queue</field>
+        <field name="arch" type="xml">
+            <search string="Shopify Customer Queue">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_customer_queue" model="ir.actions.act_window">
+        <field name="name">Customer Queue</field>
+        <field name="res_model">shopify.customer.queue</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Shopify API Log -->
+    <record id="view_shopify_api_log_tree" model="ir.ui.view">
+        <field name="name">shopify.api.log.tree</field>
+        <field name="model">shopify.api.log</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify API Logs">
+                <field name="name"/>
+                <field name="endpoint"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_api_log_form" model="ir.ui.view">
+        <field name="name">shopify.api.log.form</field>
+        <field name="model">shopify.api.log</field>
+        <field name="arch" type="xml">
+            <form string="Shopify API Log">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="endpoint"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_api_log_search" model="ir.ui.view">
+        <field name="name">shopify.api.log.search</field>
+        <field name="model">shopify.api.log</field>
+        <field name="arch" type="xml">
+            <search string="Shopify API Logs">
+                <field name="name"/>
+                <field name="endpoint"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_api_log" model="ir.actions.act_window">
+        <field name="name">API Logs</field>
+        <field name="res_model">shopify.api.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Shopify Error Log -->
+    <record id="view_shopify_error_log_tree" model="ir.ui.view">
+        <field name="name">shopify.error.log.tree</field>
+        <field name="model">shopify.error.log</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Error Logs">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_error_log_form" model="ir.ui.view">
+        <field name="name">shopify.error.log.form</field>
+        <field name="model">shopify.error.log</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Error Log">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_error_log_search" model="ir.ui.view">
+        <field name="name">shopify.error.log.search</field>
+        <field name="model">shopify.error.log</field>
+        <field name="arch" type="xml">
+            <search string="Shopify Error Logs">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_error_log" model="ir.actions.act_window">
+        <field name="name">Error Logs</field>
+        <field name="res_model">shopify.error.log</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Shopify Sync Report -->
+    <record id="view_shopify_sync_report_tree" model="ir.ui.view">
+        <field name="name">shopify.sync.report.tree</field>
+        <field name="model">shopify.sync.report</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Sync Reports">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_sync_report_form" model="ir.ui.view">
+        <field name="name">shopify.sync.report.form</field>
+        <field name="model">shopify.sync.report</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Sync Report">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="shopify_id"/>
+                        <field name="instance_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_sync_report_search" model="ir.ui.view">
+        <field name="name">shopify.sync.report.search</field>
+        <field name="model">shopify.sync.report</field>
+        <field name="arch" type="xml">
+            <search string="Shopify Sync Reports">
+                <field name="name"/>
+                <field name="shopify_id"/>
+                <field name="instance_id"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shopify_sync_report" model="ir.actions.act_window">
+        <field name="name">Product Sync Report</field>
+        <field name="res_model">shopify.sync.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
+

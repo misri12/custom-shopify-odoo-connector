@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_shopify_import_stock_wizard" model="ir.actions.act_window">
+        <field name="name">Import Stock</field>
+        <field name="res_model">shopify.import.stock.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_shopify_import_stock_wizard_form" model="ir.ui.view">
+        <field name="name">shopify.import.stock.wizard.form</field>
+        <field name="model">shopify.import.stock.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Stock from Shopify">
+                <sheet>
+                    <group>
+                        <field name="store_id" required="1" options="{'no_create': True}"/>
+                        <field name="auto_apply_inventory_adjustment"/>
+                    </group>
+                    <p class="text-muted">
+                        This will fetch inventory levels from Shopify for the selected store and
+                        synchronize Odoo stock quantities. Products with lot/serial tracking will be skipped.
+                    </p>
+                </sheet>
+                <footer>
+                    <button name="action_import_stock"
+                            string="Execute"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel"
+                            special="cancel"
+                            class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
+

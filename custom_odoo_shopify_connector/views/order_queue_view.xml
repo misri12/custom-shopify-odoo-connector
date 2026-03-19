@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_shopify_order_queue_list" model="ir.ui.view">
+        <field name="name">shopify.order.queue.list</field>
+        <field name="model">shopify.order.queue</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Order Queue">
+                <field name="create_date"/>
+                <field name="store_id"/>
+                <field name="shopify_order_id"/>
+                <field name="state"/>
+                <field name="log_message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_order_queue_form" model="ir.ui.view">
+        <field name="name">shopify.order.queue.form</field>
+        <field name="model">shopify.order.queue</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Order Queue">
+                <sheet>
+                    <group>
+                        <field name="store_id"/>
+                        <field name="shopify_order_id"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <field name="log_message"/>
+                        <field name="payload"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Graph view: queue volume by state / store / day -->
+    <record id="view_shopify_order_queue_graph" model="ir.ui.view">
+        <field name="name">shopify.order.queue.graph</field>
+        <field name="model">shopify.order.queue</field>
+        <field name="arch" type="xml">
+            <graph string="Order Queue" type="bar">
+                <field name="id" type="measure" string="Records"/>
+                <field name="store_id"/>
+                <field name="state"/>
+                <field name="create_date" interval="day"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_shopify_order_queue" model="ir.actions.act_window">
+        <field name="name">Order Queue</field>
+        <field name="res_model">shopify.order.queue</field>
+        <field name="view_mode">graph,tree,form</field>
+    </record>
+
+    <record id="view_shopify_sync_log_list" model="ir.ui.view">
+        <field name="name">shopify.sync.log.list</field>
+        <field name="model">shopify.sync.log</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Logs">
+                <field name="create_date" string="Created"/>
+                <field name="date"/>
+                <field name="store_id"/>
+                <field name="operation"/>
+                <field name="status"/>
+                <field name="message"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_sync_log_form" model="ir.ui.view">
+        <field name="name">shopify.sync.log.form</field>
+        <field name="model">shopify.sync.log</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Log">
+                <sheet>
+                    <group>
+                        <field name="create_date" string="Created"/>
+                        <field name="date"/>
+                        <field name="store_id"/>
+                        <field name="operation"/>
+                        <field name="status"/>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                        <field name="payload"/>
+                        <field name="response"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Graph view: logs by type / status over time -->
+    <record id="view_shopify_sync_log_graph" model="ir.ui.view">
+        <field name="name">shopify.sync.log.graph</field>
+        <field name="model">shopify.sync.log</field>
+        <field name="arch" type="xml">
+            <graph string="Shopify Logs" type="bar">
+                <field name="id" type="measure" string="Entries"/>
+                <field name="operation"/>
+                <field name="status"/>
+                <field name="date" interval="day"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_shopify_sync_log" model="ir.actions.act_window">
+        <field name="name">Logs</field>
+        <field name="res_model">shopify.sync.log</field>
+        <field name="view_mode">graph,tree,form</field>
+    </record>
+
+</odoo>
+

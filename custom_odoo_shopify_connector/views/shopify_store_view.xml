@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_shopify_store_list" model="ir.ui.view">
+        <field name="name">shopify.store.list</field>
+        <field name="model">shopify.store</field>
+        <field name="arch" type="xml">
+            <tree string="Shopify Stores">
+                <field name="name"/>
+                <field name="shop_url"/>
+                <field name="active"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_shopify_store_form" model="ir.ui.view">
+        <field name="name">shopify.store.form</field>
+        <field name="model">shopify.store</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Store">
+                <sheet>
+                    <notebook>
+                        <page string="General">
+                            <group>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="shop_url"/>
+                                    <field name="company_id"/>
+                                    <field name="active"/>
+                                </group>
+                                <group>
+                                    <field name="access_token" password="1"/>
+                                    <field name="api_key"/>
+                                    <field name="api_secret" password="1"/>
+                                    <field name="webhook_secret" password="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Product Settings">
+                            <group>
+                                <group string="Import Behavior">
+                                    <field name="auto_create_product_if_not_found"/>
+                                    <field name="import_sales_description"/>
+                                    <field name="sync_product_images"/>
+                                </group>
+                                <group string="Export Behavior">
+                                    <field name="use_odoo_description_on_export"/>
+                                    <field name="shopify_pricelist_id"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Order &amp; Inventory">
+                            <group>
+                                <group string="Order Settings">
+                                    <field name="default_unshipped_order_warehouse_id"/>
+                                    <field name="sale_auto_workflow_id"/>
+                                </group>
+                                <group string="Update Order Shipping Status">
+                                    <field name="update_shipping_sync_enabled"/>
+                                    <field name="update_shipping_interval_number"
+                                           invisible="context.get('update_shipping_sync_enabled') == False"/>
+                                    <field name="update_shipping_interval_type"
+                                           invisible="context.get('update_shipping_sync_enabled') == False"/>
+                                    <field name="last_shipping_sync_time"
+                                           readonly="1"
+                                           invisible="context.get('update_shipping_sync_enabled') == False"/>
+                                </group>
+                                <group string="Import Shipped Orders">
+                                    <field name="import_shipped_orders_enabled"/>
+                                    <field name="import_shipped_orders_interval_number"
+                                           invisible="context.get('import_shipped_orders_enabled') == False"/>
+                                    <field name="import_shipped_orders_interval_type"
+                                           invisible="context.get('import_shipped_orders_enabled') == False"/>
+                                    <field name="last_shipped_orders_import_time"
+                                           readonly="1"
+                                           invisible="context.get('import_shipped_orders_enabled') == False"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="action_test_connection"
+                                type="object"
+                                string="Test Connection"
+                                class="btn-primary"/>
+                        <button name="action_sync_products"
+                                type="object"
+                                string="Sync Products"/>
+                        <button name="action_product_sync_check"
+                                type="object"
+                                string="Product Sync Check"/>
+                        <button name="action_sync_orders"
+                                type="object"
+                                string="Sync Orders"/>
+                        <button name="action_sync_customers"
+                                type="object"
+                                string="Sync Customers"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Optional graph view to analyze stores by company / active flag -->
+    <record id="view_shopify_store_graph" model="ir.ui.view">
+        <field name="name">shopify.store.graph</field>
+        <field name="model">shopify.store</field>
+        <field name="arch" type="xml">
+            <graph string="Shopify Stores" type="bar">
+                <field name="id" type="measure" string="Stores"/>
+                <field name="company_id"/>
+                <field name="active"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_shopify_store" model="ir.actions.act_window">
+        <field name="name">Shopify Stores</field>
+        <field name="res_model">shopify.store</field>
+        <field name="view_mode">tree,form,graph</field>
+    </record>
+
+</odoo>
+
